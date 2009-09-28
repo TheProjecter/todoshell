@@ -23,15 +23,19 @@ class MySqlite3:
             sql = "select id,create_time,end_time,subject from task where status = 1;"
         rec = self.c.execute(sql)
         #print self.c.fetchall()
-        #print 'Total number: %d' % len(self.c.fetchall())
+        
         print str_head
         print "==============================="
+        cnt = 0
         for ln in rec:
             #print convert_cn(ln)
             for itm in ln:
                 sys.stdout.write(convert_cn(str(itm)))
                 sys.stdout.write(" | ")
             sys.stdout.write('\n')
+            cnt = cnt + 1
+        print "==============================="
+        print "Total number:[%d]." % (cnt)
     def add(self,sub):
         dt_create = str(datetime.date.today())[0:10]
         sql = "insert into task values (NULL,'%s',NULL,'%s',NULL,0);" % (dt_create,sub)
