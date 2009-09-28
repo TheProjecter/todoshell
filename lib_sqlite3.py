@@ -8,6 +8,15 @@ sys.setdefaultencoding('utf8')
 def convert_cn(s):
     return s.encode('utf8')
 
+def inred( s ):
+    return "%s[31;2m%s%s[0m"%(chr(27), s, chr(27))
+
+def ingreen( s ):
+    return "%s[32;2m%s%s[0m"%(chr(27), s, chr(27))
+
+def inblue( s ):
+    return "%s[33;2m%s%s[0m"%(chr(27), s, chr(27))
+
 class MySqlite3:
     def __init__(self,db):
         self.conn = sqlite3.connect(db)
@@ -20,7 +29,9 @@ class MySqlite3:
             sql = "select id,create_time,subject from task;"
         elif cmp(arg,"done") == 0:
             str_head = "id | create date | end date | subject |"
-            sql = "select id,create_time,end_time,subject from task where status = 1;"
+            sql = "select id,create_time,subject from task where status = 1;"
+        else:
+            sql = "select id,create_time,subject from task where status = 0;"
         rec = self.c.execute(sql)
         #print self.c.fetchall()
         
@@ -29,9 +40,18 @@ class MySqlite3:
         cnt = 0
         for ln in rec:
             #print convert_cn(ln)
-            for itm in ln:
-                sys.stdout.write(convert_cn(str(itm)))
-                sys.stdout.write(" | ")
+            str_id = str(ln[0])
+            if len(str_id) == 1:
+                str_id = "%s    " % str_id
+            elif len(str_id) == 2:
+                str_id = "%s   " % str_id
+            elif len(str_id) == 3:
+                str_id = "%s  " % str_id
+            elif len(str_id) == 4:
+                str_id = "%s " % str_id
+            sys.stdout.write(ingreen(str_id) + " | ")
+            sys.stdout.write(inblue(ln[1]) + " | ")
+            sys.stdout.write(inred(convert_cn(ln[2])))
             sys.stdout.write('\n')
             cnt = cnt + 1
         print "==============================="
