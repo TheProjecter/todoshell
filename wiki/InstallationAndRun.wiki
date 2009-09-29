@@ -1,0 +1,4 @@
+==Installation==
+  #download the package or check out the newest code by svn;
+  #database initialize
+    # rm todo.db
