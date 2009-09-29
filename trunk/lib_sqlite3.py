@@ -54,8 +54,9 @@ class MySqlite3:
             sys.stdout.write(inred(convert_cn(ln[2])))
             sys.stdout.write('\n')
             cnt = cnt + 1
+            print '-------------------------------------------------------'
         print "==============================="
-        print "Total number:[%d]." % (cnt)
+        print "Total number:[%d]" % (cnt)
     def add(self,sub):
         dt_create = str(datetime.date.today())[0:10]
         sql = "insert into task values (NULL,'%s',NULL,'%s',NULL,0);" % (dt_create,sub)
