@@ -6,3 +6,7 @@
   * ls todo = list todo
   * ls done = list done
   * ls all = list all
+==add task==
+  * add message: add task 
+==finish task==
+  * done task-id: finish task by id
