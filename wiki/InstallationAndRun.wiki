@@ -1,4 +1,8 @@
 ==Installation==
   #download the package or check out the newest code by svn;
+  #install sqlite3,python2.6,python-sqlite3
   #database initialize
     # rm todo.db
+    # sqlite3 todo.db < schema.sql
+==Run==
+  #./gtd.py
