@@ -1,12 +1,16 @@
 import sqlite3
 import datetime
 import sys
+import platform
 
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-def convert_cn(s):
-    return s.encode('utf8')
+def convert_utf(s):
+    return s.encode('utf8')    
+
+def convert_gbk(s):
+    return s.encode('gb2312')
 
 def inred( s ):
     return "%s[31;2m%s%s[0m"%(chr(27), s, chr(27))
@@ -37,7 +41,7 @@ class MySqlite3:
                 sql = "select id,name from queue;"
             else:
                 sql = "select id,create_time,subject from task where status = 0;"
-	else:
+        else:
             arg = args[0:args.find('@')]
             queue = args[args.find('@') + 1:len(args)]
             if cmp(arg,"todo") == 0:
@@ -69,10 +73,16 @@ class MySqlite3:
                 str_id = "%s  " % str_id
             elif len(str_id) == 4:
                 str_id = "%s " % str_id
-            sys.stdout.write(ingreen(str_id) + " | ")
-            sys.stdout.write(inblue(ln[1]) + " | ")
-            if len(ln) > 2:
-                sys.stdout.write(inred(convert_cn(ln[2])))
+            if cmp(platform.platform(),"Windows-32bit") == 0:
+                sys.stdout.write(str_id + " | ")
+                sys.stdout.write(ln[1] + " | ")
+                if len(ln) > 2:
+                    sys.stdout.write(convert_gbk(ln[2]))
+            else:
+                sys.stdout.write(ingreen(str_id) + " | ")
+                sys.stdout.write(inblue(ln[1]) + " | ")
+                if len(ln) > 2:
+                    sys.stdout.write(inred(convert_utf(ln[2])))
             sys.stdout.write('\n')
             cnt = cnt + 1
             print '-------------------------------------------------------'
