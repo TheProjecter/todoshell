@@ -16,8 +16,11 @@ class CLI(cmd.Cmd):
         self.mysqlite3.list(arg)
 
     def help_list(self):
-        print "syntax: list [todo|done|all]"
-        print "-- list task."
+        print "syntax: list [todo|done|all|queue]"
+        print "list todo -- list todo tasks."
+        print "list done -- list finish tasks."
+        print "list all -- list all tasks."
+        print "list queue -- list all queue."
         
     def do_add(self,sub):
         self.mysqlite3.add(sub)

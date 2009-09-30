@@ -21,22 +21,42 @@ class MySqlite3:
     def __init__(self,db):
         self.conn = sqlite3.connect(db)
         self.c = self.conn.cursor()
-    def list(self,arg):
-        str_head = "id | create date | subject |"
-        if cmp(arg,"todo") == 0:
-            sql = "select id,create_time,subject from task where status = 0;"
-        elif cmp(arg,"all") == 0:
-            sql = "select id,create_time,subject from task;"
-        elif cmp(arg,"done") == 0:
-            str_head = "id | create date | end date | subject |"
-            sql = "select id,create_time,subject from task where status = 1;"
-        else:
-            sql = "select id,create_time,subject from task where status = 0;"
+    def list(self,args):
+        str_head = "|id   |create  date| subject                      |"        
+        if cmp(args.find('@'),-1) == 0:
+            arg = args
+            if cmp(arg,"todo") == 0:
+                sql = "select id,create_time,subject from task where status = 0;"
+            elif cmp(arg,"all") == 0:
+                sql = "select id,create_time,subject from task;"
+            elif cmp(arg,"done") == 0:
+                str_head = "id | create date | end date | subject |"
+                sql = "select id,create_time,subject from task where status = 1;"
+            elif cmp(arg,"queue") == 0:
+                str_head = "id | queue name |"
+                sql = "select id,name from queue;"
+            else:
+                sql = "select id,create_time,subject from task where status = 0;"
+	else:
+            arg = args[0:args.find('@')]
+            queue = args[args.find('@') + 1:len(args)]
+            if cmp(arg,"todo") == 0:
+                sql = "select id,create_time,subject from task where status = 0 and queue_id = %s;" % queue
+            elif cmp(arg,"all") == 0:
+                sql = "select id,create_time,subject from task where queue_id = %s;" % queue
+            elif cmp(arg,"done") == 0:
+                str_head = "id | create date | end date | subject |"
+                sql = "select id,create_time,subject from task where status = 1 and queue_id = %s;"  % queue
+            elif cmp(arg,"queue") == 0:
+                str_head = "id | queue name |"
+                sql = "select id,name from queue;"
+            else:
+                sql = "select id,create_time,subject from task where status = 0 and queue_id = %s;" % queue
         rec = self.c.execute(sql)
         #print self.c.fetchall()
-        
+        print "+=================================================+"
         print str_head
-        print "==============================="
+        print "+=================================================+"
         cnt = 0
         for ln in rec:
             #print convert_cn(ln)
@@ -51,15 +71,21 @@ class MySqlite3:
                 str_id = "%s " % str_id
             sys.stdout.write(ingreen(str_id) + " | ")
             sys.stdout.write(inblue(ln[1]) + " | ")
-            sys.stdout.write(inred(convert_cn(ln[2])))
+            if len(ln) > 2:
+                sys.stdout.write(inred(convert_cn(ln[2])))
             sys.stdout.write('\n')
             cnt = cnt + 1
             print '-------------------------------------------------------'
-        print "==============================="
         print "Total number:[%d]" % (cnt)
     def add(self,sub):
         dt_create = str(datetime.date.today())[0:10]
-        sql = "insert into task values (NULL,'%s',NULL,'%s',NULL,0);" % (dt_create,sub)
+        if cmp(sub.find('@'),-1) == 0:
+            sub_subject = sub
+            str_queue = 1
+        else:
+            str_subject = sub[0:sub.find('@')] 
+            str_queue = sub[sub.find('@')+1:len(sub)]
+        sql = "insert into task values (NULL,'%s',NULL,'%s',NULL,0,%s);" % (dt_create,str_subject,str_queue)
         #print sql
         self.c.execute(sql)
         self.conn.commit()
