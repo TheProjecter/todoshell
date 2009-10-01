@@ -90,7 +90,7 @@ class MySqlite3:
     def add(self,sub):
         dt_create = str(datetime.date.today())[0:10]
         if cmp(sub.find('@'),-1) == 0:
-            sub_subject = sub
+            str_subject = sub
             str_queue = 1
         else:
             str_subject = sub[0:sub.find('@')] 
