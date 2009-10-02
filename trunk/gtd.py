@@ -42,6 +42,9 @@ class CLI(cmd.Cmd):
     def do_exit(self, arg):
         sys.exit(1)
 
+    def do_EOF(self,arg):
+        return True
+
     def help_quit(self):
         print "syntax: quit",
         print "-- terminates the application"
