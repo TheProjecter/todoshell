@@ -89,17 +89,22 @@ class MySqlite3:
         print "Total number:[%d]" % (cnt)
     def add(self,sub):
         dt_create = str(datetime.date.today())[0:10]
-        if cmp(sub.find('@'),-1) == 0:
-            str_subject = sub
-            str_queue = 1
+        if cmp(sub[0:5],"queue") == 0:
+            sql = "insert into queue values (NULL,'%s');" % (sub[6:])
+            str_prompt = "Queue added!"
         else:
-            str_subject = sub[0:sub.find('@')] 
-            str_queue = sub[sub.find('@')+1:len(sub)]
-        sql = "insert into task values (NULL,'%s',NULL,'%s',NULL,0,%s);" % (dt_create,str_subject,str_queue)
-        #print sql
+            if cmp(sub.find('@'),-1) == 0:
+                str_subject = sub
+                str_queue = 1
+            else:
+                str_subject = sub[0:sub.find('@')] 
+                str_queue = sub[sub.find('@')+1:len(sub)]
+            sql = "insert into task values (NULL,'%s',NULL,'%s',NULL,0,%s);" % (dt_create,str_subject,str_queue)
+            str_prompt = "Task added!"
+            #print sql
         self.c.execute(sql)
         self.conn.commit()
-        print 'Task added!'
+        print str_prompt
     def done(self,tid):
         dt_end = str(datetime.date.today())[0:10]
         sql = "update task set end_time = '%s' ,status = 1 where id = %s;" % (dt_end,tid)
