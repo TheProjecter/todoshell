@@ -24,6 +24,7 @@ def inblue( s ):
 class MySqlite3:
     def __init__(self,db):
         self.conn = sqlite3.connect(db)
+        self.conn.text_factory = str
         self.c = self.conn.cursor()
     def list(self,args):
         str_head = "|id   |create  date| subject                      |"        
