@@ -56,16 +56,73 @@ class MainWindow(wx.Frame):
             self.tc_left.AppendItem(itm_done,str_queue)
         #init main list box
         self.ls_main.Clear()
-        sql = "select subject from task where status = 0;"
+        sql = "select id,subject from task where status = 0;"
         rec = self.obj_sqlite3.exec_select(sql)
         for itm in rec:
             #self.ls_main.InsertItem(0,itm[0])
-            self.ls_main.Append(unicode(itm[0],'utf-8'))
+            self.ls_main.Append(str(itm[0]) + "." + unicode(itm[1],'utf-8'))
     def On_TreeCtrl_Activated(self,e):
         #print "abc"
         pass
+    def show_list(self):
+        self.ls_main.Clear()
+        itm_parent  = self.tc_left.GetItemParent(self.tc_left.GetSelection())
+        if not itm_parent:
+            sql = "select id,subject,status from task;"
+            rec = self.obj_sqlite3.exec_select(sql)
+            n_itm = 0
+            for itm in rec:
+                self.ls_main.Append(str(itm[0]) + "." + unicode(itm[1],'utf-8'))
+                if cmp(1,itm[2]) == 0:
+                    self.ls_main.Check(n_itm,True)
+                n_itm = n_itm + 1
+            return
+        str_item = self.tc_left.GetItemText(self.tc_left.GetSelection())
+        str_kind = self.tc_left.GetItemText(itm_parent)
+        #show todo and done
+        if cmp("Category",str_kind) == 0:
+            if cmp("TODO",str_item) == 0:
+                sql = "select id,subject,status from task where status = 0;"
+            else:
+                sql = "select id,subject,status from task where status = 1;"
+            rec = self.obj_sqlite3.exec_select(sql)
+            n_itm = 0
+            for itm in rec:
+                self.ls_main.Append(str(itm[0]) + "." + unicode(itm[1],'utf-8'))
+                if cmp(1,itm[2]) == 0:
+                    self.ls_main.Check(n_itm,True)
+                    n_itm = n_itm + 1
+            return
+        lst_queue = self.obj_sqlite3.get_queues()
+        #show subsubject
+        if cmp(str_kind,"TODO") == 0:
+            if cmp("All",str_item) == 0:
+                sql = "select id,subject,status from task where status = 0;"
+            else:
+                sql = "select id,subject,status from task where status = 0 and queue_id = %s" % str(lst_queue.index(str_item) + 1)
+            rec = self.obj_sqlite3.exec_select(sql)
+            n_itm = 0
+            for itm in rec:
+                self.ls_main.Append(str(itm[0]) + "." + unicode(itm[1],'utf-8'))
+                if cmp(1,itm[2]) == 0:
+                    self.ls_main.Check(n_itm,True)
+                    n_itm = n_itm + 1
+        elif cmp(str_kind,"DONE") == 0:
+            if cmp("All",str_item) == 0:
+                sql = "select id,subject,status from task where status = 1;"
+            else:
+                sql = "select id,subject,status from task where status = 1 and queue_id = %s" % str(lst_queue.index(str_item) + 1)
+            rec = self.obj_sqlite3.exec_select(sql)
+            n_itm = 0
+            for itm in rec:
+                self.ls_main.Append(str(itm[0]) + "." + unicode(itm[1],'utf-8'))
+                if cmp(1,itm[2]) == 0:
+                    self.ls_main.Check(n_itm,True)
+                    n_itm = n_itm + 1
+        #print self.tc_left.GetItemText(itm_parent) + self.tc_left.GetItemText(e.GetItem())
     def On_TreeCtrl_Sel_Changed(self,e):
-        #print "bbb"
+        self.show_list()
+        '''
         itm_parent  = self.tc_left.GetItemParent(e.GetItem())
         str_item = self.tc_left.GetItemText(e.GetItem())
         str_kind = self.tc_left.GetItemText(itm_parent)
@@ -73,21 +130,22 @@ class MainWindow(wx.Frame):
         self.ls_main.Clear()
         if cmp(str_kind,"TODO") == 0:
             if cmp("All",str_item) == 0:
-                sql = "select subject from task where status = 0;"
+                sql = "select id,subject from task where status = 0;"
             else:
-                sql = "select subject from task where status = 0 and queue_id = %s" % str(lst_queue.index(self.tc_left.GetItemText(e.GetItem())) + 1)
+                sql = "select id,subject from task where status = 0 and queue_id = %s" % str(lst_queue.index(self.tc_left.GetItemText(e.GetItem())) + 1)
             rec = self.obj_sqlite3.exec_select(sql)
             for itm in rec:
-                self.ls_main.Append(unicode(itm[0],'utf-8'))
+                self.ls_main.Append(str(itm[0]) + "." + unicode(itm[1],'utf-8'))
         elif cmp(str_kind,"DONE") == 0:
             if cmp("All",str_item) == 0:
-                sql = "select subject from task where status = 1;"
+                sql = "select id,subject from task where status = 1;"
             else:
-                sql = "select subject from task where status = 1 and queue_id = %s" % str(lst_queue.index(str_item) + 1)
+                sql = "select id,subject from task where status = 1 and queue_id = %s" % str(lst_queue.index(str_item) + 1)
             rec = self.obj_sqlite3.exec_select(sql)
             for itm in rec:
-                self.ls_main.Append(unicode(itm[0],'utf-8'))
+                self.ls_main.Append(str(itm[0]) + "." + unicode(itm[1],'utf-8'))
         #print self.tc_left.GetItemText(itm_parent) + self.tc_left.GetItemText(e.GetItem())
+        '''
     def On_Add_Click(self,e):
         #add task
         lst_queue = self.obj_sqlite3.get_queues()
@@ -102,12 +160,21 @@ class MainWindow(wx.Frame):
         sql = "insert into task values (NULL,'%s',NULL,'%s',NULL,0,%s);" % (dt_create,str_subject,str_queue)
         self.obj_sqlite3.exec_update(sql)
         self.edt_text.Clear()
+        self.show_list()
     def On_CheckListBox(self,e):
-        itm_checked = self.ls_main.GetItem()
-        print 'abc'
+        #print self.ls_main.IsChecked(e.GetSelection())
+        dt_end = str(datetime.date.today())[0:10]
+        str_sel = self.ls_main.GetString(e.GetSelection())
+        str_sel = str_sel[0:str_sel.find('.')]
+        if self.ls_main.IsChecked(e.GetSelection()):
+            sql = "update task set end_time = '%s', status = 1 where id = %s;" % (dt_end,str_sel)
+        else:
+            sql = "update task set end_time = '%s', status = 0 where id = %s;" % ("",str_sel)
+        self.obj_sqlite3.exec_update(sql)
+        self.show_list()
     def OnAbout(self,e):
         d= wx.MessageDialog( self, " TodoShell \n"
-                            " in wxPython","About TodoShell", wx.OK)
+                            "2009.1","About TodoShell", wx.OK)
                             # Create a message dialog box
         d.ShowModal() # Shows it
         d.Destroy() # finally destroy it when finished.
