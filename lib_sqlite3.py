@@ -1,3 +1,4 @@
+# coding:utf-8
 import sqlite3
 import datetime
 import sys
@@ -74,7 +75,7 @@ class MySqlite3:
                 str_id = "%s  " % str_id
             elif len(str_id) == 4:
                 str_id = "%s " % str_id
-            if cmp(platform.platform(),"Windows-32bit") == 0:
+            if cmp(platform.system(),"Windows") == 0:
                 sys.stdout.write(str_id + " | ")
                 sys.stdout.write(ln[1] + " | ")
                 if len(ln) > 2:
