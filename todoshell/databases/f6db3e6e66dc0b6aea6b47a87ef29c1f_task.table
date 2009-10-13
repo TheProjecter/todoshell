@@ -1,0 +1,30 @@
+(dp1
+S'comment'
+p2
+S'CHAR(256)'
+p3
+sS'status'
+p4
+S'CHAR(512)'
+p5
+sS'queue'
+p6
+S'REFERENCES queue(id) ON DELETE CASCADE'
+p7
+sS'create_time'
+p8
+S'DATE'
+p9
+sS'end_time'
+p10
+S'DATE'
+p11
+sS'id'
+p12
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p13
+sS'subject'
+p14
+S'CHAR(256)'
+p15
+s.

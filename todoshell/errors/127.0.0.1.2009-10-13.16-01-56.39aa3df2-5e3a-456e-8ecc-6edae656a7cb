@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'/home/john/python/web2py-read-only/applications/todoshell/controllers/test.py'
+p4
+sS'code'
+p5
+S'# coding: utf8\n# try something like\ndef index(): return dict(message="hello from todoshell application")\ndef task():\n    #recores=db().select(db.task.ALL,orderby=db.task.id)\n    #return dict(records=SQLTABLE(recores))\n    records=db(db.task.queue==request.vars.queue).select(orderby=db.task.id)\n    form=SQLFORM(db.task,fields=[\'queue\'])\n    return dict(form=form,records=records)\n    \ndef show():\n    id=request.vars.id\n    tasks=db(db.task.id==id).select()\n    if not len(tasks): redirect(URL(r=request,f=\'tasks\'))\n    return dict(task=tasks[0])\n\ndef new_task():\n    form=SQLFORM(db.task,fields=[\'subject\',\'comment\',\\\n        \'category\'])\n    if form.accepts(request.vars,session):\n        redirect(URL(r=request,f=\'tasks\'))\n    return dict(form=form)\n\nresponse._vars=response._caller(new_task)\n'
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "/home/john/python/web2py-read-only/gluon/restricted.py", line 178, in restricted\n    exec ccode in environment\n  File "/home/john/python/web2py-read-only/applications/todoshell/controllers/test.py", line 24, in <module>\n  File "/home/john/python/web2py-read-only/gluon/globals.py", line 102, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/john/python/web2py-read-only/applications/todoshell/controllers/test.py", line 19, in new_task\n    \'category\'])\n  File "/home/john/python/web2py-read-only/gluon/sqlhtml.py", line 530, in __init__\n    field = self.table[fieldname]\n  File "/home/john/python/web2py-read-only/gluon/sql.py", line 1345, in __getitem__\n    return dict.__getitem__(self, str(key))\nKeyError: \'category\'\n'
+p8
+s.
