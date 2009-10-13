@@ -1,0 +1,26 @@
+(dp1
+S'category'
+p2
+S'REFERENCES category(id) ON DELETE CASCADE'
+p3
+sS'description'
+p4
+S'CHAR(256)'
+p5
+sS'title'
+p6
+S'CHAR(512)'
+p7
+sS'date'
+p8
+S'DATE'
+p9
+sS'id'
+p10
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p11
+sS'instructions'
+p12
+S'BLOB'
+p13
+s.

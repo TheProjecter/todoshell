@@ -1,0 +1,76 @@
+timestamp: 2009-10-13T14:57:23.287347
+CREATE TABLE auth_user(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	first_name CHAR(128),
+	last_name CHAR(128),
+	email CHAR(512),
+	password CHAR(512),
+	registration_key CHAR(512)
+);
+success!
+timestamp: 2009-10-13T14:57:23.373298
+CREATE TABLE auth_group(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	role CHAR(512),
+	description TEXT
+);
+success!
+timestamp: 2009-10-13T14:57:23.448952
+CREATE TABLE auth_membership(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	user_id REFERENCES auth_user(id) ON DELETE CASCADE,
+	group_id REFERENCES auth_group(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2009-10-13T14:57:23.516609
+CREATE TABLE auth_permission(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	group_id REFERENCES auth_group(id) ON DELETE CASCADE,
+	name CHAR(512),
+	table_name CHAR(512),
+	record_id INTEGER
+);
+success!
+timestamp: 2009-10-13T14:57:23.592421
+CREATE TABLE auth_event(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	time_stamp TIMESTAMP,
+	client_ip CHAR(512),
+	user_id REFERENCES auth_user(id) ON DELETE CASCADE,
+	origin CHAR(512),
+	description TEXT
+);
+success!
+timestamp: 2009-10-13T15:20:11.486160
+CREATE TABLE category(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name CHAR(512)
+);
+success!
+timestamp: 2009-10-13T15:20:11.594138
+CREATE TABLE recipe(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	title CHAR(512),
+	description CHAR(256),
+	category REFERENCES category(id) ON DELETE CASCADE,
+	date DATE,
+	instructions BLOB
+);
+success!
+timestamp: 2009-10-13T15:37:53.920631
+CREATE TABLE queue(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name CHAR(512)
+);
+success!
+timestamp: 2009-10-13T15:37:54.006528
+CREATE TABLE task(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	create_time DATE,
+	end_time DATE,
+	subject CHAR(256),
+	comment CHAR(256),
+	status CHAR(512),
+	queue REFERENCES queue(id) ON DELETE CASCADE
+);
+success!
