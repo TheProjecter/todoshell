@@ -1,13 +1,24 @@
 # coding: utf8
 # try something like
 def index(): return dict(message="hello from todoshell application")
-def task():
+def tasks():
     #recores=db().select(db.task.ALL,orderby=db.task.id)
     #return dict(records=SQLTABLE(recores))
-    records=db(db.task.queue==request.vars.queue).select(orderby=db.task.id)
-    form=SQLFORM(db.task,fields=['queue'])
+    records=db(db.task.queue_id==request.vars.queue).select(orderby=db.task.id)
+    form=SQLFORM(db.task,fields=['queue_id','status'])
     return dict(form=form,records=records)
-    
+def todo_tasks():
+    #recores=db().select(db.task.ALL,orderby=db.task.id)
+    #return dict(records=SQLTABLE(recores))
+    records=db(db.task.queue_id==request.vars.queue).select(orderby=db.task.id and db.task.status==0)
+    form=SQLFORM(db.task,fields=['queue_id'])
+    return dict(form=form,records=records)    
+def done_tasks():
+    #recores=db().select(db.task.ALL,orderby=db.task.id)
+    #return dict(records=SQLTABLE(recores))
+    records=db(db.task.queue_id==request.vars.queue).select(orderby=db.task.id and db.task.status==1)
+    form=SQLFORM(db.task,fields=['queue_id'])
+    return dict(form=form,records=records)  
 def show():
     id=request.vars.id
     tasks=db(db.task.id==id).select()
@@ -16,7 +27,7 @@ def show():
 
 def new_task():
     form=SQLFORM(db.task,fields=['subject','comment',\
-        'create_time','queue'])
+        'create_time','queue_id'])
     if form.accepts(request.vars,session):
         redirect(URL(r=request,f='tasks'))
     return dict(form=form)
