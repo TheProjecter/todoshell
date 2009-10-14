@@ -74,3 +74,23 @@ CREATE TABLE task(
 	queue REFERENCES queue(id) ON DELETE CASCADE
 );
 success!
+timestamp: 2009-10-14T09:06:09.066972
+CREATE TABLE queue(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name CHAR(512)
+);
+success!
+timestamp: 2009-10-14T09:06:09.173089
+CREATE TABLE task(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	create_time DATE,
+	end_time DATE,
+	subject CHAR(256),
+	comment CHAR(256),
+	status CHAR(512),
+	queue REFERENCES queue(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2009-10-14T09:54:48.907596
+ALTER TABLE task ADD queue_id REFERENCES queue(id) ON DELETE CASCADE;
+success!

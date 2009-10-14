@@ -14,7 +14,7 @@ def index():
     rendered by views/default/index.html or views/generic.html
     """
     """
-    response.flash = T('Welcome to web2py')
+    response.flash = T('Welcome to Todoshell-Web')
     return dict(message=T('Hello World'))
     """
     return dict(name=value, othername=othervalue)

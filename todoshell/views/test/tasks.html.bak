@@ -4,8 +4,9 @@
 <table>
 {{for task in records:}}
 <tr>
+<td>{{=A(task.id}}</td>
+<td>{{=task.create_time}}</td>
 <td>{{=A(task.subject,_href=URL(r=request,f='show?id=%s'%task.id))}}</td>
-<td>{{=task.create_date}}</td>
 </tr>
 {{pass}}
 </table>
