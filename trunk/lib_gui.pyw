@@ -11,20 +11,50 @@ ID_TREE = 112
 ID_LIST = 113
 ID_TEXT = 114
 ID_BTN = 115
+ID_STATUS_BAR = 116
 class MainWindow(wx.Frame):
     def __init__(self,parent,id,title):
         self.create_gui_controls(parent,id,title)
         self.obj_sqlite3 = cls_sqlite3("todo.db")
         self.init_ctrl()
     def create_gui_controls(self,parent,id,title):
-        wx.Frame.__init__(self,parent,wx.ID_ANY, title, wx.DefaultPosition,wx.Size(480,540))
-        self.pnl_bk = wx.Panel(self, wx.ID_ANY,wx.Point(3,2),wx.Size(457,455))
+        wx.Frame.__init__(self,parent,wx.ID_ANY, title, wx.DefaultPosition,wx.Size(740,540),wx.DEFAULT_FRAME_STYLE + wx.TAB_TRAVERSAL)
+        #self.SetSizeHints( wx.DefaultSize, wx.DefaultSize );
+        self.pnl_bk = wx.Panel(self, wx.ID_ANY,wx.Point(2,2),wx.Size(457,455))
+        self.boxsizer_bk = wx.BoxSizer(wx.VERTICAL)
+        self.boxsizer_top = wx.BoxSizer(wx.HORIZONTAL)
+        
+        #category
         self.tc_left = wx.TreeCtrl(self.pnl_bk,ID_TREE, wx.Point(7,12),wx.Size(155,390),wx.TR_HAS_BUTTONS + wx.TR_EXTENDED + wx.TR_LINES_AT_ROOT, wx.DefaultValidator)
+        self.boxsizer_top.Add(self.tc_left,0,wx.ALL + wx.EXPAND,5)
+        
+        #task list
         self.ls_main = wx.CheckListBox(self.pnl_bk,ID_LIST,wx.Point(166,12),wx.Size(284,389))
-        self.edt_text = wx.TextCtrl(self.pnl_bk,ID_TEXT,"",wx.Point(12,414),wx.Size(350,31),0,wx.DefaultValidator)
+        self.boxsizer_top.Add(self.ls_main,1,wx.ALL + wx.EXPAND,5)
+        
+        #task comment
+        self.edt_comment = wx.TextCtrl(self.pnl_bk,ID_TEXT,"",wx.Point(12,414),wx.Size(250,31),0,wx.DefaultValidator)
+        self.boxsizer_top.Add(self.edt_comment,0,wx.ALL + wx.EXPAND,5)
+        
+        self.boxsizer_bk.Add(self.boxsizer_top,1,wx.EXPAND,5)
+        self.boxsizer_btm = wx.BoxSizer(wx.HORIZONTAL)
+        
+        #task text
+        self.edt_text = wx.TextCtrl(self.pnl_bk,ID_TEXT,"",wx.Point(12,414),wx.Size(350,31),wx.TE_PROCESS_ENTER,wx.DefaultValidator)
+        self.boxsizer_btm.Add(self.edt_text,1,wx.ALL + wx.EXPAND,5)
+        
+        #add task button
         self.btn_add = wx.Button(self.pnl_bk,ID_BTN,"Add",wx.Point(369,414),wx.Size(81,32),0,wx.DefaultValidator)
+        self.boxsizer_btm.Add(self.btn_add,0,wx.ALL,5)
+        
+        self.boxsizer_bk.Add(self.boxsizer_btm,0,0,5)
+        
+        self.pnl_bk.SetSizer(self.boxsizer_bk)
+        self.pnl_bk.Layout()
+        
         #self.control = wx.TextCtrl(self, 1, style=wx.TE_MULTILINE)
-        self.CreateStatusBar() # A StatusBar in the bottom of the window
+        self.statusbar = self.CreateStatusBar()
+        self.statusbar.SetStatusText("Welcome to Todoshell!")
         # Setting up the menu.
         filemenu= wx.Menu()
         filemenu.Append(ID_ABOUT, "&About"," Information about this program")
@@ -42,7 +72,9 @@ class MainWindow(wx.Frame):
         wx.EVT_TREE_SEL_CHANGED(self.tc_left,ID_TREE, self.On_TreeCtrl_Sel_Changed )
         wx.EVT_BUTTON(self.btn_add,ID_BTN,self.On_Add_Click )
         wx.EVT_CHECKLISTBOX(self.ls_main,ID_LIST, self.On_CheckListBox )
+        wx.EVT_TEXT_ENTER(self.edt_text, ID_TEXT, self.On_Text_Enter) 
         self.Show(True)
+        self.Centre()
     def init_ctrl(self):
         #init left tree view
         itm_root = self.tc_left.AddRoot("Category")
@@ -76,6 +108,7 @@ class MainWindow(wx.Frame):
                 if cmp(1,itm[2]) == 0:
                     self.ls_main.Check(n_itm,True)
                 n_itm = n_itm + 1
+            self.statusbar.SetStatusText("任务数量:" + str(self.ls_main.GetCount()))
             return
         str_item = self.tc_left.GetItemText(self.tc_left.GetSelection())
         str_kind = self.tc_left.GetItemText(itm_parent)
@@ -92,6 +125,7 @@ class MainWindow(wx.Frame):
                 if cmp(1,itm[2]) == 0:
                     self.ls_main.Check(n_itm,True)
                     n_itm = n_itm + 1
+            self.statusbar.SetStatusText("任务数量:" + str(self.ls_main.GetCount()))
             return
         lst_queue = self.obj_sqlite3.get_queues()
         #show subsubject
@@ -120,33 +154,10 @@ class MainWindow(wx.Frame):
                     self.ls_main.Check(n_itm,True)
                     n_itm = n_itm + 1
         #print self.tc_left.GetItemText(itm_parent) + self.tc_left.GetItemText(e.GetItem())
+        self.statusbar.SetStatusText("任务数量:" + str(self.ls_main.GetCount()))
     def On_TreeCtrl_Sel_Changed(self,e):
         self.show_list()
-        '''
-        itm_parent  = self.tc_left.GetItemParent(e.GetItem())
-        str_item = self.tc_left.GetItemText(e.GetItem())
-        str_kind = self.tc_left.GetItemText(itm_parent)
-        lst_queue = self.obj_sqlite3.get_queues()
-        self.ls_main.Clear()
-        if cmp(str_kind,"TODO") == 0:
-            if cmp("All",str_item) == 0:
-                sql = "select id,subject from task where status = 0;"
-            else:
-                sql = "select id,subject from task where status = 0 and queue_id = %s" % str(lst_queue.index(self.tc_left.GetItemText(e.GetItem())) + 1)
-            rec = self.obj_sqlite3.exec_select(sql)
-            for itm in rec:
-                self.ls_main.Append(str(itm[0]) + "." + unicode(itm[1],'utf-8'))
-        elif cmp(str_kind,"DONE") == 0:
-            if cmp("All",str_item) == 0:
-                sql = "select id,subject from task where status = 1;"
-            else:
-                sql = "select id,subject from task where status = 1 and queue_id = %s" % str(lst_queue.index(str_item) + 1)
-            rec = self.obj_sqlite3.exec_select(sql)
-            for itm in rec:
-                self.ls_main.Append(str(itm[0]) + "." + unicode(itm[1],'utf-8'))
-        #print self.tc_left.GetItemText(itm_parent) + self.tc_left.GetItemText(e.GetItem())
-        '''
-    def On_Add_Click(self,e):
+    def add_task(self,str_task):
         #add task
         lst_queue = self.obj_sqlite3.get_queues()
         n_queue = lst_queue.index(self.tc_left.GetItemText(self.tc_left.GetSelection())) + 1
@@ -155,12 +166,19 @@ class MainWindow(wx.Frame):
             str_queue = '1'
         else:
             str_queue = str(n_queue)
-        str_subject = self.edt_text.GetValue()
+        str_subject = str_task
         dt_create = dt_create = str(datetime.date.today())[0:10]
         sql = "insert into task values (NULL,'%s',NULL,'%s',NULL,0,%s);" % (dt_create,str_subject,str_queue)
         self.obj_sqlite3.exec_update(sql)
         self.edt_text.Clear()
         self.show_list()
+    def On_Add_Click(self,e):
+        #add task
+        str_task = self.edt_text.GetValue()
+        self.add_task(str_task)
+    def On_Text_Enter(self,e):
+        str_task = self.edt_text.GetValue()
+        self.add_task(str_task)
     def On_CheckListBox(self,e):
         #print self.ls_main.IsChecked(e.GetSelection())
         dt_end = str(datetime.date.today())[0:10]
