@@ -48,7 +48,7 @@ void imageViewFrm::CreateGUIControls()
 	//Add the custom code before or after the blocks
 	////GUI Items Creation Start
 
-	WxPanel1 = new wxPanel(this, ID_WXPANEL1, wxPoint(3, 2), wxSize(457, 455));
+	WxPanel1 = new wxPanel(this, ID_WXPANEL1, wxPoint(3, 2), wxSize(684, 468));
 
 	tc_left = new wxTreeCtrl(WxPanel1, ID_WXTREECTRL1, wxPoint(7, 13), wxSize(155, 390), wxTR_HAS_BUTTONS, wxDefaultValidator, wxT("tc_left"));
 
@@ -61,7 +61,7 @@ void imageViewFrm::CreateGUIControls()
 
 	SetTitle(wxT("imageView"));
 	SetIcon(wxNullIcon);
-	SetSize(8,8,477,498);
+	SetSize(8,8,706,507);
 	Center();
 	
 	////GUI Items Creation End
