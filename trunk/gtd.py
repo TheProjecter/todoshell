@@ -10,7 +10,7 @@ class CLI(cmd.Cmd):
 
     def __init__(self,db):
         cmd.Cmd.__init__(self)
-        self.prompt = "> "
+        self.prompt = "todo> "
         self.mysqlite3 = lib_sqlite3.MySqlite3(db)
     def do_list(self,arg):
         self.mysqlite3.list(arg)
