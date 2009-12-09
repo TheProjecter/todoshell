@@ -22,6 +22,9 @@ def ingreen( s ):
 def inblue( s ):
     return "%s[33;2m%s%s[0m"%(chr(27), s, chr(27))
 
+def incyan( s ):
+    return "%s[36;2m%s%s[0m"%(chr(27), s, chr(27))
+
 class MySqlite3:
     def __init__(self,db):
         self.conn = sqlite3.connect(db)
@@ -84,7 +87,7 @@ class MySqlite3:
                 sys.stdout.write(ingreen(str_id) + " | ")
                 sys.stdout.write(inblue(ln[1]) + " | ")
                 if len(ln) > 2:
-                    sys.stdout.write(inred(convert_utf(ln[2])))
+                    sys.stdout.write(incyan(convert_utf(ln[2])))
             sys.stdout.write('\n')
             cnt = cnt + 1
             print '-------------------------------------------------------'
