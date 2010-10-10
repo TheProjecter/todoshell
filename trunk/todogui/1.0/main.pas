@@ -130,8 +130,13 @@ var
    str_temp:string;
 begin
      // treeview init;
-     conn.DatabaseName:= 'E:\\todoshell\\trunk\\todo.db';
-     conn.Open;
+     conn.DatabaseName:= '..\\..\\todo.db';
+     try
+        conn.Open;
+     except
+        ShowMessage('Open database [..\\..\\todo.db] failed.');
+        self.Close;
+     end;
      if (conn.Connected) then
         begin
         sql := 'select id,name from queue;';

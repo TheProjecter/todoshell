@@ -24,6 +24,7 @@ object frm_main: Tfrm_main
       Height = 25
       Top = 13
       Width = 336
+      Anchors = [akTop, akLeft, akRight]
       OnKeyDown = edt_taskKeyDown
       TabOrder = 0
     end
@@ -32,6 +33,7 @@ object frm_main: Tfrm_main
       Height = 26
       Top = 12
       Width = 67
+      Anchors = [akTop, akRight]
       Caption = 'Add Task'
       OnClick = btn_addClick
       TabOrder = 1
@@ -115,9 +117,8 @@ object frm_main: Tfrm_main
     top = 192
   end
   object conn: TSQLite3Connection
-    Connected = True
+    Connected = False
     LoginPrompt = False
-    DatabaseName = 'E:\todoshell\trunk\todo.db'
     KeepConnection = False
     Transaction = transaction
     Options = []
