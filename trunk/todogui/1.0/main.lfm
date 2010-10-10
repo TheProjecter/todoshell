@@ -1,0 +1,127 @@
+object frm_main: Tfrm_main
+  Left = 482
+  Height = 458
+  Top = 159
+  Width = 433
+  Caption = 'TodoshellGUI'
+  ClientHeight = 438
+  ClientWidth = 433
+  Menu = MainMenu1
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '0.9.28.2'
+  object Panel2: TPanel
+    Left = 0
+    Height = 47
+    Top = 371
+    Width = 433
+    Align = alBottom
+    ClientHeight = 47
+    ClientWidth = 433
+    TabOrder = 0
+    object edt_task: TEdit
+      Left = 8
+      Height = 25
+      Top = 13
+      Width = 336
+      OnKeyDown = edt_taskKeyDown
+      TabOrder = 0
+    end
+    object btn_add: TBitBtn
+      Left = 352
+      Height = 26
+      Top = 12
+      Width = 67
+      Caption = 'Add Task'
+      OnClick = btn_addClick
+      TabOrder = 1
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 20
+    Top = 418
+    Width = 433
+    Panels = <>
+  end
+  object tv_cate: TTreeView
+    Left = 0
+    Height = 371
+    Top = 0
+    Width = 163
+    Align = alLeft
+    DefaultItemHeight = 14
+    TabOrder = 2
+    OnChange = tv_cateChange
+    OnClick = tv_cateClick
+    Items.Data = {
+      F9FFFFFF020001000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF020000000000
+      0000010800000043617465676F7279FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00
+      000000000000000004000000544F444FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      00000000000000000004000000444F4E45
+    }
+  end
+  object Splitter1: TSplitter
+    Left = 163
+    Height = 371
+    Top = 0
+    Width = 6
+  end
+  object clb_task: TCheckListBox
+    Left = 169
+    Height = 371
+    Top = 0
+    Width = 264
+    Align = alClient
+    ItemHeight = 0
+    OnClickCheck = clb_taskClickCheck
+    TabOrder = 4
+  end
+  object MainMenu1: TMainMenu
+    left = 245
+    top = 105
+    object mn_file: TMenuItem
+      Caption = '&File'
+      OnClick = mn_fileClick
+      object mn_exit: TMenuItem
+        Caption = 'E&xit'
+        OnClick = mn_exitClick
+      end
+    end
+    object mn_help: TMenuItem
+      Caption = '&Help'
+      object mn_about: TMenuItem
+        Caption = 'About...'
+        OnClick = mn_aboutClick
+      end
+    end
+  end
+  object query: TSQLQuery
+    IndexName = 'DEFAULT_ORDER'
+    AutoCalcFields = False
+    Database = conn
+    Transaction = transaction
+    ReadOnly = False
+    Params = <>
+    UpdateMode = upWhereKeyOnly
+    left = 325
+    top = 54
+  end
+  object transaction: TSQLTransaction
+    Active = False
+    Action = caNone
+    Database = conn
+    left = 325
+    top = 192
+  end
+  object conn: TSQLite3Connection
+    Connected = True
+    LoginPrompt = False
+    DatabaseName = 'E:\todoshell\trunk\todo.db'
+    KeepConnection = False
+    Transaction = transaction
+    Options = []
+    left = 328
+    top = 128
+  end
+end
