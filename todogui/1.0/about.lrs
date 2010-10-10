@@ -1,0 +1,20 @@
+{ 自动生成的 Lazarus 资源文件 }
+
+LazarusResources.Add('Tfrm_about','FORMDATA',[
+  'TPF0'#10'Tfrm_about'#9'frm_about'#4'Left'#3'"'#1#6'Height'#3#192#0#3'Top'#3
+  +#175#0#5'Width'#3'0'#1#11'BorderIcons'#11#12'biSystemMenu'#0#11'BorderStyle'
+  +#7#8'bsDialog'#7'Caption'#6#5'About'#12'ClientHeight'#3#192#0#11'ClientWidth'
+  +#3'0'#1#8'Position'#7#16'poMainFormCenter'#10'LCLVersion'#6#8'0.9.28.2'#0#6
+  +'TLabel'#6'Label1'#4'Left'#2';'#6'Height'#2#17#3'Top'#2'+'#5'Width'#3#172#0#7
+  +'Caption'#6#19'TodoShell - TodoGui'#12'Font.CharSet'#7#14'GB2312_CHARSET'#10
+  +'Font.Color'#7#7'clBlack'#11'Font.Height'#2#240#9'Font.Name'#6#6#229#174#139
+  +#228#189#147#10'Font.Pitch'#7#10'fpVariable'#12'Font.Quality'#7#7'fqDraft'#10
+  +'Font.Style'#11#6'fsBold'#0#11'ParentColor'#8#10'ParentFont'#8#0#0#6'TLabel'
+  +#6'Label2'#4'Left'#2';'#6'Height'#2#17#3'Top'#2'P'#5'Width'#3#194#0#7'Captio'
+  +'n'#6#27'http://www.hausen.biz/blog/'#12'Font.CharSet'#7#12'ANSI_CHARSET'#10
+  +'Font.Color'#7#6'clBlue'#11'Font.Height'#2#243#9'Font.Name'#6#7'Verdana'#10
+  +'Font.Pitch'#7#10'fpVariable'#12'Font.Quality'#7#7'fqDraft'#10'Font.Style'#11
+  +#11'fsUnderline'#0#11'ParentColor'#8#10'ParentFont'#8#0#0#7'TButton'#6'btn_o'
+  +'k'#4'Left'#3#158#0#6'Height'#2#27#3'Top'#3#128#0#5'Width'#2'U'#7'Caption'#6
+  +#3'&OK'#11'ModalResult'#2#1#8'TabOrder'#2#0#0#0#0
+]);
