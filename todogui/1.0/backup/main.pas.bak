@@ -130,8 +130,13 @@ var
    str_temp:string;
 begin
      // treeview init;
-     conn.DatabaseName:= 'E:\\todoshell\\trunk\\todo.db';
-     conn.Open;
+     conn.DatabaseName:= '..\\..\\todo.db';
+     try
+        conn.Open;
+     except
+        ShowMessage('Open database [..\\..\\todo.db] failed.');
+        self.Close;
+     end;
      if (conn.Connected) then
         begin
         sql := 'select id,name from queue;';
@@ -236,7 +241,7 @@ begin
      else if tv_cate.Items[0].Items[1].Selected then
         queue_id := 0
      else
-         queue_id := tv_cate.Selected.Index;
+         queue_id := (tv_cate.Selected.Index) + 1;
      sql := Format('insert into task values (NULL,"%s","","%s","",0,%d);',[current_time,subject,queue_id]);
      query.Close;
      query.SQL.Text:=sql;

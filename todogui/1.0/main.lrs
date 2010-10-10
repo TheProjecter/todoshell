@@ -1,3 +1,5 @@
+{ 自动生成的 Lazarus 资源文件 }
+
 LazarusResources.Add('Tfrm_main','FORMDATA',[
   'TPF0'#9'Tfrm_main'#8'frm_main'#4'Left'#3#226#1#6'Height'#3#202#1#3'Top'#3#159
   +#0#5'Width'#3#177#1#7'Caption'#6#12'TodoshellGUI'#12'ClientHeight'#3#182#1#11
@@ -5,15 +7,16 @@ LazarusResources.Add('Tfrm_main','FORMDATA',[
   +'ion'#7#14'poScreenCenter'#10'LCLVersion'#6#8'0.9.28.2'#0#6'TPanel'#6'Panel2'
   +#4'Left'#2#0#6'Height'#2'/'#3'Top'#3's'#1#5'Width'#3#177#1#5'Align'#7#8'alBo'
   +'ttom'#12'ClientHeight'#2'/'#11'ClientWidth'#3#177#1#8'TabOrder'#2#0#0#5'TEd'
-  +'it'#8'edt_task'#4'Left'#2#8#6'Height'#2#25#3'Top'#2#13#5'Width'#3'P'#1#9'On'
-  +'KeyDown'#7#15'edt_taskKeyDown'#8'TabOrder'#2#0#0#0#7'TBitBtn'#7'btn_add'#4
-  +'Left'#3'`'#1#6'Height'#2#26#3'Top'#2#12#5'Width'#2'C'#7'Caption'#6#8'Add Ta'
-  +'sk'#7'OnClick'#7#12'btn_addClick'#8'TabOrder'#2#1#0#0#0#10'TStatusBar'#10'S'
-  +'tatusBar1'#4'Left'#2#0#6'Height'#2#20#3'Top'#3#162#1#5'Width'#3#177#1#6'Pan'
-  +'els'#14#0#0#0#9'TTreeView'#7'tv_cate'#4'Left'#2#0#6'Height'#3's'#1#3'Top'#2
-  +#0#5'Width'#3#163#0#5'Align'#7#6'alLeft'#17'DefaultItemHeight'#2#14#8'TabOrd'
-  +'er'#2#2#8'OnChange'#7#13'tv_cateChange'#7'OnClick'#7#12'tv_cateClick'#10'It'
-  +'ems.Data'#10'q'#0#0#0#249#255#255#255#2#0#1#0#0#0#255#255#255#255#255#255
+  +'it'#8'edt_task'#4'Left'#2#8#6'Height'#2#25#3'Top'#2#13#5'Width'#3'P'#1#7'An'
+  +'chors'#11#5'akTop'#6'akLeft'#7'akRight'#0#9'OnKeyDown'#7#15'edt_taskKeyDown'
+  +#8'TabOrder'#2#0#0#0#7'TBitBtn'#7'btn_add'#4'Left'#3'`'#1#6'Height'#2#26#3'T'
+  +'op'#2#12#5'Width'#2'C'#7'Anchors'#11#5'akTop'#7'akRight'#0#7'Caption'#6#8'A'
+  +'dd Task'#7'OnClick'#7#12'btn_addClick'#8'TabOrder'#2#1#0#0#0#10'TStatusBar'
+  +#10'StatusBar1'#4'Left'#2#0#6'Height'#2#20#3'Top'#3#162#1#5'Width'#3#177#1#6
+  +'Panels'#14#0#0#0#9'TTreeView'#7'tv_cate'#4'Left'#2#0#6'Height'#3's'#1#3'Top'
+  +#2#0#5'Width'#3#163#0#5'Align'#7#6'alLeft'#17'DefaultItemHeight'#2#14#8'TabO'
+  +'rder'#2#2#8'OnChange'#7#13'tv_cateChange'#7'OnClick'#7#12'tv_cateClick'#10
+  +'Items.Data'#10'q'#0#0#0#249#255#255#255#2#0#1#0#0#0#255#255#255#255#255#255
   +#255#255#255#255#255#255#255#255#255#255#2#0#0#0#0#0#0#0#1#8#0#0#0'Category'
   +#255#255#255#255#255#255#255#255#255#255#255#255#255#255#255#255#0#0#0#0#0#0
   +#0#0#0#4#0#0#0'TODO'#255#255#255#255#255#255#255#255#255#255#255#255#255#255
@@ -31,7 +34,6 @@ LazarusResources.Add('Tfrm_main','FORMDATA',[
   +'s'#14#0#10'UpdateMode'#7#14'upWhereKeyOnly'#4'left'#3'E'#1#3'top'#2'6'#0#0
   +#15'TSQLTransaction'#11'transaction'#6'Active'#8#6'Action'#7#6'caNone'#8'Dat'
   +'abase'#7#4'conn'#4'left'#3'E'#1#3'top'#3#192#0#0#0#18'TSQLite3Connection'#4
-  +'conn'#9'Connected'#9#11'LoginPrompt'#8#12'DatabaseName'#6#26'E:\todoshell\t'
-  +'runk\todo.db'#14'KeepConnection'#8#11'Transaction'#7#11'transaction'#7'Opti'
-  +'ons'#11#0#4'left'#3'H'#1#3'top'#3#128#0#0#0#0
+  +'conn'#9'Connected'#8#11'LoginPrompt'#8#14'KeepConnection'#8#11'Transaction'
+  +#7#11'transaction'#7'Options'#11#0#4'left'#3'H'#1#3'top'#3#128#0#0#0#0
 ]);
