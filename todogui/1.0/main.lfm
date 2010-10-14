@@ -1,7 +1,7 @@
 object frm_main: Tfrm_main
-  Left = 482
+  Left = 433
   Height = 458
-  Top = 159
+  Top = 157
   Width = 433
   Caption = 'TodoshellGUI'
   ClientHeight = 438
@@ -53,6 +53,7 @@ object frm_main: Tfrm_main
     Width = 163
     Align = alLeft
     DefaultItemHeight = 14
+    PopupMenu = PopupMenu1
     TabOrder = 2
     OnChange = tv_cateChange
     OnClick = tv_cateClick
@@ -124,5 +125,25 @@ object frm_main: Tfrm_main
     Options = []
     left = 328
     top = 128
+  end
+  object PopupMenu1: TPopupMenu
+    OnPopup = PopupMenu1Popup
+    left = 245
+    top = 160
+    object mn_add_queue: TMenuItem
+      Caption = 'Add Category'
+      OnClick = mn_add_queueClick
+    end
+    object mn_modify_queue: TMenuItem
+      Caption = 'Modify Catetory'
+      OnClick = mn_modify_queueClick
+    end
+    object MenuItem1: TMenuItem
+      Caption = '-'
+    end
+    object mn_del_queue: TMenuItem
+      Caption = 'Delete Category'
+      OnClick = mn_del_queueClick
+    end
   end
 end
