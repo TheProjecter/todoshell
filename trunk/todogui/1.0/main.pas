@@ -17,11 +17,16 @@ type
     clb_task: TCheckListBox;
     edt_task: TEdit;
     MainMenu1: TMainMenu;
+    MenuItem1: TMenuItem;
+    mn_del_queue: TMenuItem;
+    mn_modify_queue: TMenuItem;
+    mn_add_queue: TMenuItem;
     mn_about: TMenuItem;
     mn_help: TMenuItem;
     mn_file: TMenuItem;
     mn_exit: TMenuItem;
     Panel2: TPanel;
+    PopupMenu1: TPopupMenu;
     Splitter1: TSplitter;
     query: TSQLQuery;
     conn: TSQLite3Connection;
@@ -34,8 +39,12 @@ type
         );
     procedure FormShow(Sender: TObject);
     procedure mn_aboutClick(Sender: TObject);
+    procedure mn_add_queueClick(Sender: TObject);
+    procedure mn_del_queueClick(Sender: TObject);
     procedure mn_exitClick(Sender: TObject);
     procedure mn_fileClick(Sender: TObject);
+    procedure mn_modify_queueClick(Sender: TObject);
+    procedure PopupMenu1Popup(Sender: TObject);
     procedure tv_cateChange(Sender: TObject; Node: TTreeNode);
     procedure tv_cateClick(Sender: TObject);
 
@@ -56,6 +65,41 @@ implementation
 procedure Tfrm_main.mn_fileClick(Sender: TObject);
 begin
 
+end;
+
+procedure Tfrm_main.mn_modify_queueClick(Sender: TObject);
+var
+queue:string;
+old_queue:string;
+sql:string;
+select_index:Integer;
+begin
+     old_queue := tv_cate.Selected.Text;
+     select_index := tv_cate.Selected.Index;
+     queue := InputBox('Modify Queue','Please Input the new queue name:',old_queue);
+     // Update database;
+     sql := Format('update queue set name = "%s" where name = "%s";',[queue,old_queue]);
+     query.Close;
+     query.SQL.Text := sql;
+     query.ExecSQL;
+     transaction.Commit;
+     // Update GUI
+     tv_cate.Selected.Text:=queue;
+     tv_cate.Items[0].Items[1].Items[select_index].Text:=queue;
+end;
+
+procedure Tfrm_main.PopupMenu1Popup(Sender: TObject);
+begin
+    if (tv_cate.Selected.Parent = tv_cate.Items[0].Items[0]) or (tv_cate.Selected.Parent = tv_cate.Items[0].Items[1]) then
+       begin
+       mn_modify_queue.Enabled := true;
+       mn_del_queue.Enabled := true;
+       end
+    else
+        begin
+        mn_modify_queue.Enabled := false;
+        mn_del_queue.Enabled := false;
+        end;
 end;
 
 procedure Tfrm_main.tv_cateChange(Sender: TObject; Node: TTreeNode);
@@ -85,6 +129,8 @@ begin
         end
      else
          begin
+         if Node = nil then
+            exit;
          queue := Node.Text;
          if (Node.Parent.Text = 'TODO') then
             sql := 'select task.id,task.subject,task.status from task,queue where queue.name = "' + queue + '" and task.queue_id = queue.id and task.status = 0;'
@@ -183,6 +229,57 @@ begin
      end;
 end;
 
+procedure Tfrm_main.mn_add_queueClick(Sender: TObject);
+var
+   queue:string;
+   sql:string;
+begin
+    queue := InputBox('Add Queue','Please input new queue name:','');
+    if Length(queue) = 0 then
+       exit;
+    // database written.
+    sql := Format('insert into queue values(NULL,"%s");',[queue]);
+    query.Close;
+    query.SQL.Text := sql;
+    query.ExecSQL;
+    transaction.Commit;
+    // update Gui
+    tv_cate.Items.AddChild(tv_cate.Items[0].Items[0],queue);
+    tv_cate.Items.AddChild(tv_cate.Items[0].Items[1],queue);
+end;
+
+procedure Tfrm_main.mn_del_queueClick(Sender: TObject);
+var
+dlg_result:Integer;
+queue:string;
+sql:string;
+msg:string;
+select_index:Integer;
+begin
+     queue := tv_cate.Selected.Text;
+     select_index := tv_cate.Selected.Index;
+     msg := Format('When delete queue[%s], all of its task will delete, please confirm:',[queue]);
+     sql := Format('delete from queue where name = "%s";',[queue]);
+     dlg_result := MessageDlg(msg,mtConfirmation,[mbYes,mbNo],0);
+     if dlg_result = mrYes then
+        begin
+        // delete task of this queue
+        sql := Format('delete from task where task.queue_id = (select id from queue where name = "%s");',[queue]);
+        query.Close;
+        query.SQL.Text := sql;
+        query.ExecSQL;
+        transaction.Commit;
+        // update db
+        query.Close;
+        query.SQL.Text:=sql;
+        query.ExecSQL;
+        transaction.Commit;
+        // update gui
+        tv_cate.Selected.Delete;
+        tv_cate.Items[0].Items[1].Items[select_index].Delete;
+        end;
+end;
+
 procedure Tfrm_main.btn_addClick(Sender: TObject);
 begin
     add_task();
@@ -195,6 +292,7 @@ sql:string;
 task_id:integer;
 str_temp:string;
 begin
+     // Update task status into database;
      //ShowMessage(IntToStr(clb_task.ItemIndex));
      item_index := clb_task.ItemIndex;
      if item_index = -1 then
@@ -213,6 +311,10 @@ begin
        query.SQL.Text:= sql;
        query.ExecSQL;
        transaction.Commit;
+
+    // Update listbox status
+
+
 end;
 
 
@@ -232,6 +334,7 @@ current_time : string;
 queue_id : integer;
 subject : string;
 begin
+     //Save data to database;
      current_time := DateTimeToStr(Now());
      subject := edt_task.Text;
      if tv_cate.Items[0].Selected then
@@ -247,6 +350,8 @@ begin
      query.SQL.Text:=sql;
      query.ExecSQL;
      transaction.Commit;
+     //Add to list box
+     clb_task.Items.Add(subject);
 end;
 
 initialization

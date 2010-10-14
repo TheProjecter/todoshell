@@ -1,7 +1,7 @@
 { 自动生成的 Lazarus 资源文件 }
 
 LazarusResources.Add('Tfrm_main','FORMDATA',[
-  'TPF0'#9'Tfrm_main'#8'frm_main'#4'Left'#3#226#1#6'Height'#3#202#1#3'Top'#3#159
+  'TPF0'#9'Tfrm_main'#8'frm_main'#4'Left'#3#177#1#6'Height'#3#202#1#3'Top'#3#157
   +#0#5'Width'#3#177#1#7'Caption'#6#12'TodoshellGUI'#12'ClientHeight'#3#182#1#11
   +'ClientWidth'#3#177#1#4'Menu'#7#9'MainMenu1'#6'OnShow'#7#8'FormShow'#8'Posit'
   +'ion'#7#14'poScreenCenter'#10'LCLVersion'#6#8'0.9.28.2'#0#6'TPanel'#6'Panel2'
@@ -14,26 +14,33 @@ LazarusResources.Add('Tfrm_main','FORMDATA',[
   +'dd Task'#7'OnClick'#7#12'btn_addClick'#8'TabOrder'#2#1#0#0#0#10'TStatusBar'
   +#10'StatusBar1'#4'Left'#2#0#6'Height'#2#20#3'Top'#3#162#1#5'Width'#3#177#1#6
   +'Panels'#14#0#0#0#9'TTreeView'#7'tv_cate'#4'Left'#2#0#6'Height'#3's'#1#3'Top'
-  +#2#0#5'Width'#3#163#0#5'Align'#7#6'alLeft'#17'DefaultItemHeight'#2#14#8'TabO'
-  +'rder'#2#2#8'OnChange'#7#13'tv_cateChange'#7'OnClick'#7#12'tv_cateClick'#10
-  +'Items.Data'#10'q'#0#0#0#249#255#255#255#2#0#1#0#0#0#255#255#255#255#255#255
-  +#255#255#255#255#255#255#255#255#255#255#2#0#0#0#0#0#0#0#1#8#0#0#0'Category'
-  +#255#255#255#255#255#255#255#255#255#255#255#255#255#255#255#255#0#0#0#0#0#0
-  +#0#0#0#4#0#0#0'TODO'#255#255#255#255#255#255#255#255#255#255#255#255#255#255
-  +#255#255#0#0#0#0#0#0#0#0#0#4#0#0#0'DONE'#0#0#9'TSplitter'#9'Splitter1'#4'Lef'
-  +'t'#3#163#0#6'Height'#3's'#1#3'Top'#2#0#5'Width'#2#6#0#0#13'TCheckListBox'#8
-  +'clb_task'#4'Left'#3#169#0#6'Height'#3's'#1#3'Top'#2#0#5'Width'#3#8#1#5'Alig'
-  +'n'#7#8'alClient'#10'ItemHeight'#2#0#12'OnClickCheck'#7#18'clb_taskClickChec'
-  +'k'#8'TabOrder'#2#4#0#0#9'TMainMenu'#9'MainMenu1'#4'left'#3#245#0#3'top'#2'i'
-  +#0#9'TMenuItem'#7'mn_file'#7'Caption'#6#5'&File'#7'OnClick'#7#12'mn_fileClic'
-  +'k'#0#9'TMenuItem'#7'mn_exit'#7'Caption'#6#5'E&xit'#7'OnClick'#7#12'mn_exitC'
-  +'lick'#0#0#0#9'TMenuItem'#7'mn_help'#7'Caption'#6#5'&Help'#0#9'TMenuItem'#8
-  +'mn_about'#7'Caption'#6#8'About...'#7'OnClick'#7#13'mn_aboutClick'#0#0#0#0#9
-  +'TSQLQuery'#5'query'#9'IndexName'#6#13'DEFAULT_ORDER'#14'AutoCalcFields'#8#8
-  +'Database'#7#4'conn'#11'Transaction'#7#11'transaction'#8'ReadOnly'#8#6'Param'
-  +'s'#14#0#10'UpdateMode'#7#14'upWhereKeyOnly'#4'left'#3'E'#1#3'top'#2'6'#0#0
-  +#15'TSQLTransaction'#11'transaction'#6'Active'#8#6'Action'#7#6'caNone'#8'Dat'
-  +'abase'#7#4'conn'#4'left'#3'E'#1#3'top'#3#192#0#0#0#18'TSQLite3Connection'#4
-  +'conn'#9'Connected'#8#11'LoginPrompt'#8#14'KeepConnection'#8#11'Transaction'
-  +#7#11'transaction'#7'Options'#11#0#4'left'#3'H'#1#3'top'#3#128#0#0#0#0
+  +#2#0#5'Width'#3#163#0#5'Align'#7#6'alLeft'#17'DefaultItemHeight'#2#14#9'Popu'
+  +'pMenu'#7#10'PopupMenu1'#8'TabOrder'#2#2#8'OnChange'#7#13'tv_cateChange'#7'O'
+  +'nClick'#7#12'tv_cateClick'#10'Items.Data'#10'q'#0#0#0#249#255#255#255#2#0#1
+  +#0#0#0#255#255#255#255#255#255#255#255#255#255#255#255#255#255#255#255#2#0#0
+  +#0#0#0#0#0#1#8#0#0#0'Category'#255#255#255#255#255#255#255#255#255#255#255
+  +#255#255#255#255#255#0#0#0#0#0#0#0#0#0#4#0#0#0'TODO'#255#255#255#255#255#255
+  +#255#255#255#255#255#255#255#255#255#255#0#0#0#0#0#0#0#0#0#4#0#0#0'DONE'#0#0
+  +#9'TSplitter'#9'Splitter1'#4'Left'#3#163#0#6'Height'#3's'#1#3'Top'#2#0#5'Wid'
+  +'th'#2#6#0#0#13'TCheckListBox'#8'clb_task'#4'Left'#3#169#0#6'Height'#3's'#1#3
+  +'Top'#2#0#5'Width'#3#8#1#5'Align'#7#8'alClient'#10'ItemHeight'#2#0#12'OnClic'
+  +'kCheck'#7#18'clb_taskClickCheck'#8'TabOrder'#2#4#0#0#9'TMainMenu'#9'MainMen'
+  +'u1'#4'left'#3#245#0#3'top'#2'i'#0#9'TMenuItem'#7'mn_file'#7'Caption'#6#5'&F'
+  +'ile'#7'OnClick'#7#12'mn_fileClick'#0#9'TMenuItem'#7'mn_exit'#7'Caption'#6#5
+  +'E&xit'#7'OnClick'#7#12'mn_exitClick'#0#0#0#9'TMenuItem'#7'mn_help'#7'Captio'
+  +'n'#6#5'&Help'#0#9'TMenuItem'#8'mn_about'#7'Caption'#6#8'About...'#7'OnClick'
+  +#7#13'mn_aboutClick'#0#0#0#0#9'TSQLQuery'#5'query'#9'IndexName'#6#13'DEFAULT'
+  +'_ORDER'#14'AutoCalcFields'#8#8'Database'#7#4'conn'#11'Transaction'#7#11'tra'
+  +'nsaction'#8'ReadOnly'#8#6'Params'#14#0#10'UpdateMode'#7#14'upWhereKeyOnly'#4
+  +'left'#3'E'#1#3'top'#2'6'#0#0#15'TSQLTransaction'#11'transaction'#6'Active'#8
+  +#6'Action'#7#6'caNone'#8'Database'#7#4'conn'#4'left'#3'E'#1#3'top'#3#192#0#0
+  +#0#18'TSQLite3Connection'#4'conn'#9'Connected'#8#11'LoginPrompt'#8#14'KeepCo'
+  +'nnection'#8#11'Transaction'#7#11'transaction'#7'Options'#11#0#4'left'#3'H'#1
+  +#3'top'#3#128#0#0#0#10'TPopupMenu'#10'PopupMenu1'#7'OnPopup'#7#15'PopupMenu1'
+  +'Popup'#4'left'#3#245#0#3'top'#3#160#0#0#9'TMenuItem'#12'mn_add_queue'#7'Cap'
+  +'tion'#6#12'Add Category'#7'OnClick'#7#17'mn_add_queueClick'#0#0#9'TMenuItem'
+  +#15'mn_modify_queue'#7'Caption'#6#15'Modify Catetory'#7'OnClick'#7#20'mn_mod'
+  +'ify_queueClick'#0#0#9'TMenuItem'#9'MenuItem1'#7'Caption'#6#1'-'#0#0#9'TMenu'
+  +'Item'#12'mn_del_queue'#7'Caption'#6#15'Delete Category'#7'OnClick'#7#17'mn_'
+  +'del_queueClick'#0#0#0#0
 ]);
